@@ -12,11 +12,11 @@ export class HotelReimbursementCalculator {
     
     // 3. 特殊审批处理
     if (input.hasSpecialApproval) {
-      return this.createApprovedResult(totalAmount, totalStandard);
+      return this.createApprovedResult(totalAmount, totalStandard, input.currency);
     }
     
     // 4. 分段计算
-    const segments = this.calculateSegments(totalAmount, totalStandard);
+    const segments = this.calculateSegments(totalAmount, totalStandard, input.currency);
     
     // 5. 汇总结果
     const companyAmount = segments.reduce((sum, seg) => sum + seg.companyAmount, 0);
@@ -28,11 +28,12 @@ export class HotelReimbursementCalculator {
       totalAmount,
       standardAmount: totalStandard,
       segments,
-      approved: false
+      approved: false,
+      currency: input.currency
     };
   }
   
-  private calculateSegments(total: number, standard: number): SegmentCalculation[] {
+  private calculateSegments(total: number, standard: number, currency: 'CNY' | 'USD'): SegmentCalculation[] {
     const segments: SegmentCalculation[] = [];
     
     // 段0: 不超过标准部分
@@ -44,7 +45,7 @@ export class HotelReimbursementCalculator {
       employeeRatio: 0.0,
       companyAmount: seg0Amount * 1.0,
       employeeAmount: seg0Amount * 0.0,
-      range: `≤ 标准 (${this.formatCurrency(standard)})`
+      range: `≤ 标准 (${this.formatCurrency(standard, currency)})`
     });
     
     // 段1: 超过标准至1.25倍标准
@@ -57,7 +58,7 @@ export class HotelReimbursementCalculator {
       employeeRatio: 0.25,
       companyAmount: seg1Amount * 0.75,
       employeeAmount: seg1Amount * 0.25,
-      range: `${this.formatCurrency(standard)} ~ 1.25×标准 (${this.formatCurrency(seg1Max)})`
+      range: `${this.formatCurrency(standard, currency)} ~ 1.25×标准 (${this.formatCurrency(seg1Max, currency)})`
     });
     
     // 段2: 超过1.25倍至3倍标准
@@ -70,7 +71,7 @@ export class HotelReimbursementCalculator {
       employeeRatio: 0.5,
       companyAmount: seg2Amount * 0.5,
       employeeAmount: seg2Amount * 0.5,
-      range: `1.25×标准 (${this.formatCurrency(seg1Max)}) ~ 3×标准 (${this.formatCurrency(seg2Max)})`
+      range: `1.25×标准 (${this.formatCurrency(seg1Max, currency)}) ~ 3×标准 (${this.formatCurrency(seg2Max, currency)})`
     });
     
     // 段3: 超过3倍标准部分
@@ -82,24 +83,26 @@ export class HotelReimbursementCalculator {
       employeeRatio: 1.0,
       companyAmount: seg3Amount * 0.0,
       employeeAmount: seg3Amount * 1.0,
-      range: `> 3×标准 (${this.formatCurrency(seg2Max)})`
+      range: `> 3×标准 (${this.formatCurrency(seg2Max, currency)})`
     });
     
     return segments;
   }
   
-  private createApprovedResult(total: number, standard: number): CalculationResult {
+  private createApprovedResult(total: number, standard: number, currency: 'CNY' | 'USD'): CalculationResult {
     return {
       companyAmount: total,
       employeeAmount: 0,
       totalAmount: total,
       standardAmount: standard,
       segments: [],
-      approved: true
+      approved: true,
+      currency
     };
   }
   
-  private formatCurrency(amount: number): string {
-    return `¥${amount.toFixed(2)}`;
+  private formatCurrency(amount: number, currency: 'CNY' | 'USD'): string {
+    const symbol = currency === 'USD' ? '$' : '¥';
+    return `${symbol}${amount.toFixed(2)}`;
   }
 }

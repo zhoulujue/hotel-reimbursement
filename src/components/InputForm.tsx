@@ -15,8 +15,11 @@ export function InputForm({ mode, onModeChange, onSubmit, errors }: InputFormPro
     inputMode: mode,
     totalAmount: undefined,
     pricePerNight: undefined,
-    hasSpecialApproval: false
+    hasSpecialApproval: false,
+    currency: 'CNY'
   });
+
+  const symbol = formData.currency === 'USD' ? '$' : '¥';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +69,7 @@ export function InputForm({ mode, onModeChange, onSubmit, errors }: InputFormPro
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
-            每晚住宿标准 (¥) <span className="text-red-500">*</span>
+            每晚住宿标准 ({symbol}) <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -86,7 +89,7 @@ export function InputForm({ mode, onModeChange, onSubmit, errors }: InputFormPro
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
-            住宿天数 <span className="text-red-500">*</span>
+          住宿天数 <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -104,11 +107,24 @@ export function InputForm({ mode, onModeChange, onSubmit, errors }: InputFormPro
         </div>
       </div>
 
+      {/* 币种选择 */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">币种</label>
+        <select
+          value={formData.currency}
+          onChange={(e) => handleInputChange('currency', e.target.value as 'CNY' | 'USD')}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="CNY">人民币 (¥)</option>
+          <option value="USD">美元 ($)</option>
+        </select>
+      </div>
+
       {/* 模式专属输入 */}
       {mode === 'total' ? (
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
-            预订总价 (¥) <span className="text-red-500">*</span>
+            预订总价 ({symbol}) <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -128,7 +144,7 @@ export function InputForm({ mode, onModeChange, onSubmit, errors }: InputFormPro
       ) : (
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
-            每晚房价 (¥) <span className="text-red-500">*</span>
+            每晚房价 ({symbol}) <span className="text-red-500">*</span>
           </label>
           <input
             type="number"

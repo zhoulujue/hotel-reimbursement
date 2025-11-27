@@ -7,7 +7,8 @@ interface ResultDisplayProps {
 
 export function ResultDisplay({ result }: ResultDisplayProps) {
   const formatCurrency = (amount: number) => {
-    return `¥${amount.toFixed(2)}`;
+    const symbol = result.currency === 'USD' ? '$' : '¥';
+    return `${symbol}${amount.toFixed(2)}`;
   };
 
   if (result.approved) {

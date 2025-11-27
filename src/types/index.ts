@@ -6,6 +6,7 @@ export interface InputData {
   totalAmount?: number;
   pricePerNight?: number;
   hasSpecialApproval: boolean;
+  currency: 'CNY' | 'USD';
 }
 
 // 计算结果接口
@@ -16,6 +17,7 @@ export interface CalculationResult {
   standardAmount: number;
   segments: SegmentCalculation[];
   approved: boolean;
+  currency: 'CNY' | 'USD';
 }
 
 // 分段计算详情
