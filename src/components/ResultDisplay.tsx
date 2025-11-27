@@ -44,14 +44,14 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
           <h4 className="text-sm font-medium text-blue-600 mb-2">公司承担金额</h4>
           <p className="text-3xl font-bold text-blue-700">{formatCurrency(result.companyAmount)}</p>
           <p className="text-sm text-blue-600 mt-1">
-            占总费用的 {((result.companyAmount / result.totalAmount) * 100).toFixed(1)}%
+            占总费用的 {result.totalAmount > 0 ? ((result.companyAmount / result.totalAmount) * 100).toFixed(1) : '0.0'}%
           </p>
         </div>
         <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200">
           <h4 className="text-sm font-medium text-yellow-600 mb-2">个人承担金额</h4>
           <p className="text-3xl font-bold text-yellow-700">{formatCurrency(result.employeeAmount)}</p>
           <p className="text-sm text-yellow-600 mt-1">
-            占总费用的 {((result.employeeAmount / result.totalAmount) * 100).toFixed(1)}%
+            占总费用的 {result.totalAmount > 0 ? ((result.employeeAmount / result.totalAmount) * 100).toFixed(1) : '0.0'}%
           </p>
         </div>
       </div>

@@ -2,6 +2,21 @@ import { InputData, CalculationResult, SegmentCalculation } from '../types';
 
 export class HotelReimbursementCalculator {
   calculate(input: InputData): CalculationResult {
+    if (!input.standardPerNight || input.standardPerNight <= 0) {
+      throw new Error('每晚住宿标准必须为正数');
+    }
+    if (!input.nights || input.nights <= 0) {
+      throw new Error('住宿天数必须为正数');
+    }
+    if (input.inputMode === 'total') {
+      if (input.totalAmount === undefined || input.totalAmount < 0) {
+        throw new Error('总价无效');
+      }
+    } else {
+      if (input.pricePerNight === undefined || input.pricePerNight < 0) {
+        throw new Error('每晚房价无效');
+      }
+    }
     // 1. 计算总标准金额
     const totalStandard = input.standardPerNight * input.nights;
     

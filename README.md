@@ -1,57 +1,25 @@
-# React + TypeScript + Vite
+# 酒店费用报销计算器
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- 技术栈：React + TypeScript + Vite + TailwindCSS
+- 路由：`react-router-dom`，支持 `/` 与 `/rules`
+- 架构：输入表单 → 验证 → 计算器 → 结果展示与分段明细
 
-Currently, two official plugins are available:
+## 使用
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 开发：`npm run dev`
+- 构建：`npm run build`
+- 预览：`npm run preview` → 访问 `http://localhost:4173/hotel-reimbursement/`
+- 检查：`npm run check`（TypeScript） / `npm run lint`
+- 测试：`npm run test`
 
-## Expanding the ESLint configuration
+## 近期更新
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 修复百分比在总费用为 0 时的 `NaN` 问题
+- 规则页返回按钮改为客户端路由 `<Link>`，避免整页刷新
+- 计算器增加输入校验，防止未填或负值导致的错误
+- 新增单元测试覆盖核心计算逻辑与校验
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 页面
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- 计算器：`/` 输入两种模式，“已获得特殊审批”直接公司全额承担
+- 政策说明：`/rules` 展示分段规则与使用指南，可返回计算器

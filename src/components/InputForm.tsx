@@ -28,7 +28,7 @@ export function InputForm({ mode, onModeChange, onSubmit, errors }: InputFormPro
     }
   };
 
-  const handleInputChange = (field: keyof InputData, value: any) => {
+  const handleInputChange = (field: keyof InputData, value: InputData[keyof InputData]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
