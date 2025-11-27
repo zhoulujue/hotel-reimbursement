@@ -34,13 +34,15 @@ export function Home() {
           </p>
           <div className="text-center mt-4">
             <a
-              href="/rules"
+              href="https://bytedance.larkoffice.com/wiki/wikcnetUQ0trZ7MHaMmB5JYvOwh"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              查看政策说明
+              政策说明
             </a>
           </div>
         </div>
