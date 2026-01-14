@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { InputForm } from '../components/InputForm';
 import { ResultDisplay } from '../components/ResultDisplay';
 import { BreakdownDisplay } from '../components/BreakdownDisplay';
+import { FlightSplit } from '../components/FlightSplit';
 import { useCalculator } from '../hooks/useCalculator';
 import { useFormValidation } from '../hooks/useFormValidation';
 import { InputData } from '../types';
@@ -118,6 +119,11 @@ export function Home() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* 航班费用分摊计算 */}
+        <div className="mt-8">
+          <FlightSplit />
         </div>
 
         {/* 底部说明 */}
